@@ -74,6 +74,7 @@ main {
 }
 
 .post-card {
+  position: relative;
   padding: 20px;
   background-color: #ffffff;
   width: 731px;
@@ -182,4 +183,39 @@ main {
 
 .create-post-form .btn-send:hover {
   opacity: 0.8;
+}
+
+/* posts actions */
+.post-actions {
+  display: none;
+  position: absolute;
+  right: 80px;
+  top: 30px;
+  width: max-content;
+  background-color: #fff;
+  z-index: 100;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.post-action {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 0.1px solid rgba(128, 128, 128, 0.5);
+}
+
+.post-action p {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.post-action .update-icon {
+  color: green;
+}
+
+.post-action .delete-icon {
+  color: red;
+}
+
+.show-popup {
+  display: block;
 }
