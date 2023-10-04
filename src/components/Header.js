@@ -41,11 +41,11 @@ const Header = () => {
         </div>
         <div className="header-items">
           <div className="header-item">
-            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <i className="fa fa-user-o" aria-hidden="true"></i>
             <p>Your Profile</p>
           </div>
           <div className="header-item">
-            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <i className="fa fa-sign-out" aria-hidden="true"></i>
             <p>Sign out</p>
           </div>
         </div>
