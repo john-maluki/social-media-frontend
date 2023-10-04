@@ -10,6 +10,6 @@
 <li>JSON
 <li>FORMIK 
 
-### The Guidline To The Creatino Of **CON_NECT**
+### The Guideline To The Creation Of **CON_NECT**
 
 #### License
