@@ -25,6 +25,7 @@
 
 .login-form .form-group input[type="text"],
 .login-form .form-group input[type="password"] {
+  margin-left: 20px;
   border: none;
   padding: 10px;
   border-bottom: 1px solid gray;
