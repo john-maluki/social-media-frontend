@@ -8,9 +8,9 @@ const Layout = () => {
   return (
     <>
       <Header />
-      {/* <HomePage /> */}
+      <HomePage />
       {/* <LoginPage /> */}
-      <SignUpPage />
+      {/* <SignUpPage /> */}
     </>
   );
 };

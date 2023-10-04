@@ -133,7 +133,7 @@ main {
   right: 100px;
   width: 300px;
   height: 400px;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .help-title {
