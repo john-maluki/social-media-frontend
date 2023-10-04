@@ -1,8 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Layout from "./layouts/Layout";
 
 function App() {
-  return <>Social Media</>;
+  return <Layout />;
 }
 
 export default App;
