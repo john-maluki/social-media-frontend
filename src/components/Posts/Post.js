@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Post = () => {
+const Post = ({ post }) => {
   const [onActionPopUp, setOnActionPopUp] = useState(false);
   const handleActionPop = () => {
     setOnActionPopUp(!onActionPopUp);
@@ -40,11 +40,7 @@ const Post = () => {
           </div>
         </div>
       </div>
-      <p className="post-card__body">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nulla
-        dolor, ornare at commodo non, feugiat non nisi. Phasellus faucibus
-        mollis pharetra. Proin blandit ac massa sed rhoncus
-      </p>
+      <p className="post-card__body">{post?.description}</p>
       <div className="post-card__footer">
         <div className="post-card__likes">
           <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>

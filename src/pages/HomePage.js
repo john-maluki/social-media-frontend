@@ -1,8 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/HomePage.css";
 import { Link, Outlet } from "react-router-dom";
+import PostForm from "../components/Posts/PostForm";
+import { MAIN_DOMAIN } from "../utils/constants";
+import axios from "axios";
+import { PostsContext } from "../contexts/PostContext";
 
 const HomePage = () => {
+  const [posts, setPosts] = useState([]);
+
+  const fetchPostsFromServer = () => {
+    axios.get(`${MAIN_DOMAIN}/posts`).then((resp) => {
+      if (resp.status === 200) {
+        setPosts(resp.data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchPostsFromServer();
+  }, []);
   return (
     <main className="main">
       <section className="main__nav-section">
@@ -22,41 +39,11 @@ const HomePage = () => {
       </section>
       <section className="main__content-section">
         {/* Posts are displayed here */}
-        <Outlet />
+        <PostsContext.Provider value={posts}>
+          <Outlet />
+        </PostsContext.Provider>
       </section>
-      <section className="create-post-section">
-        <div className="create-post-form">
-          <div className="help-title">
-            <h3>Leave us a Post??</h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              focusable="false"
-              viewBox="0 0 16 16"
-              data-testid="Icon--dash"
-              data-garden-id="buttons.icon"
-              data-garden-version="8.13.0"
-              theme="[object Object]"
-              class="sc-bwzfXH hDrfMZ"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-strokeWidth="2"
-                d="M3 8h10"
-              ></path>
-            </svg>
-          </div>
-          <div className="message">
-            <label htmlFor="post">We are eager to see what you post?</label>
-            <textarea rows="3" name="post"></textarea>
-          </div>
-          <button className="btn-send" type="submit">
-            Send
-          </button>
-        </div>
-      </section>
+      <PostForm />
     </main>
   );
 };
