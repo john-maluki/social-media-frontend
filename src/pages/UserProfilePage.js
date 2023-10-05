@@ -87,7 +87,7 @@ const UserProfilePage = () => {
             </div>
           </div>
           <div className="form-group">
-            <input type="submit" value="Sava Changes" />
+            <input type="submit" value="Save Changes" />
           </div>
         </form>
       </section>
