@@ -1,0 +1,212 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Jack Dan",
+      "email": "jack.dan@email.com",
+      "gender": "M",
+      "date of birth": "29/10/99",
+      "contact": "2222255555"
+    },
+    {
+      "id": 2,
+      "name": "Mercy Han",
+      "email": "mercy.han@email.com",
+      "gender": "F",
+      "date of birth": "09/1/98",
+      "contact": "0000000000"
+    },
+    {
+      "id": 3,
+      "name": "Danny Man",
+      "email": "danny.man@email.com",
+      "gender": "M",
+      "date of birth": "25/11/99",
+      "contact": "6666777777"
+    },
+    {
+      "id": 4,
+      "name": "Sasha Kat",
+      "email": "sasha.kat@email.com",
+      "gender": "F",
+      "date of birth": "22/2/00",
+      "contact": "1111188888"
+    },
+    {
+      "id": 5,
+      "name": "Ava Mack",
+      "email": "ava.mack@email.com",
+      "gender": "F",
+      "date of birth": "18/9/01",
+      "contact": "3333344444"
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnweuhfuewhf",
+      "id": 6
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnweuhfuewhf",
+      "id": 7
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnhbhbh",
+      "id": 8
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnhbhbh",
+      "id": 9
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "wwwwwwwjohn",
+      "id": 10
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "wwwwwwwjohn",
+      "id": 11
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnwwwww",
+      "id": 12
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johneeeee",
+      "id": 13
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johneeeeeeee",
+      "id": 14
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johngffff",
+      "id": 15
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnfffffff",
+      "id": 16
+    },
+    {
+      "username": "johnmaluki@libre.com",
+      "password": "johnddddddd",
+      "id": 17
+    }
+  ],
+  "location": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "country": "Kenya",
+      "city": "Nairobi"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "country": "USA",
+      "city": "New York"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "country": "Nigeria",
+      "city": "Lagos"
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "country": "Tanzania",
+      "city": "Dodoma"
+    },
+    {
+      "id": 5,
+      "user_id": 5,
+      "country": "Uganda",
+      "city": "Kampala"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "user_id": 2
+    },
+    {
+      "id": 3,
+      "user_id": 3
+    },
+    {
+      "id": 4,
+      "user_id": 4
+    },
+    {
+      "id": 5,
+      "user_id": 5
+    }
+  ],
+  "likes": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "post_id": 1
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "post_id": 2
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "post_id": 3
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "post_id": 4
+    },
+    {
+      "id": 5,
+      "user_id": 5,
+      "post_id": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "post_id": 1
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "post_id": 2
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "post_id": 3
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "post_id": 4
+    },
+    {
+      "id": 5,
+      "user_id": 5,
+      "post_id": 5
+    }
+  ]
+}

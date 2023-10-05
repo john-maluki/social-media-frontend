@@ -26,7 +26,7 @@ const Post = () => {
         <div className="post-card__more-options" onClick={handleActionPop}>
           <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
         </div>
-        <div className={myComponentStyle}>
+        <div className={myComponentStyle} onMouseLeave={handleActionPop}>
           <div className="post-action" onClick={handleActionPop}>
             <i
               className="fa fa-pencil-square-o update-icon"
