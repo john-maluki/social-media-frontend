@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import "../assets/css/LoginPage.css";
 // import { Link } from "react-router-dom";
 
-const LoginPage = ({ login, isLoging }) => {
+const LoginPage = ({ handleLogin, isLoging }) => {
   const [userCredetials, setUserCredetials] = useState({
     username: "",
     password: "",
@@ -12,13 +14,13 @@ const LoginPage = ({ login, isLoging }) => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validateLoginForm();
-    if (loginFormIsValid()) {
-      login(userCredetials);
-    }
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   validateLoginForm();
+  //   if (loginFormIsValid()) {
+  //     login(userCredetials);
+  //   }
+  // };
 
   const loginFormIsValid = () => {
     return !(
@@ -53,13 +55,29 @@ const LoginPage = ({ login, isLoging }) => {
     }));
   };
 
+  const formSchema = yup.object().shape({
+    username: yup.string().email("Invalid email").required("Must enter email"),
+    password: yup.string().required("Must enter a password").min(5),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: formSchema,
+    onSubmit: (values) => {
+      console.log(values);
+      handleLogin(values);
+    },
+  });
   return (
     <div className="login-page">
       <div className="login-card">
         <div className="login-text">
           <h1>Login</h1>
         </div>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={formik.handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <div className="form-control">
@@ -69,12 +87,11 @@ const LoginPage = ({ login, isLoging }) => {
                 name="username"
                 id="username"
                 placeholder="Type your email"
-                onChange={handleOnChange}
+                onChange={formik.handleChange}
+                value={formik.values.username}
               />
             </div>
-            {userCredetialsError.username ? (
-              <p className="error">{userCredetialsError.username}</p>
-            ) : null}
+            <p className="error">{formik.errors.username}</p>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -85,19 +102,18 @@ const LoginPage = ({ login, isLoging }) => {
                 name="password"
                 id="password"
                 placeholder="Type your password"
-                onChange={handleOnChange}
+                onChange={formik.handleChange}
+                value={formik.values.password}
               />
             </div>
-            {userCredetialsError.password ? (
-              <p className="error">{userCredetialsError.password}</p>
-            ) : null}
+            <p className="error">{formik.errors.password}</p>
           </div>
           <div className="form-group">
-            {/* {isLoging ? (
-              <LoaderComponent height={30} />
+            {isLoging ? (
+              <p>Loading ...</p>
             ) : (
               <input type="submit" value="LOGIN" />
-            )} */}
+            )}
           </div>
         </form>
         <div className="or-link">

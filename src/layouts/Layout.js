@@ -9,7 +9,6 @@ import AppRoutes from "../routes/AppRoutes";
 const Layout = () => {
   return (
     <>
-      <Header />
       <AppRoutes />
       {/* <HomePage /> */}
       {/* <LoginPage /> */}

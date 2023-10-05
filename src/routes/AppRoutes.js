@@ -16,7 +16,6 @@ const AppRoutes = () => {
         <Route path="user-liked-posts" element={<UserLikedPosts />} />
       </Route>
       <Route path="/user-profile" element={<UserProfilePage />} />
-      <Route path="/sign-up" element={<SignUpPage />} />
     </Routes>
   );
 };
