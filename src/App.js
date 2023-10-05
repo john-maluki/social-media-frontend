@@ -15,9 +15,10 @@ import AuthRoutes from "./routes/AuthRoutes";
 import Header from "./components/Header";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { AuthContext } from "./contexts/AuthContext";
 
 const jwt_example =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiZmlyc3RfbmFtZSI6IkpvaG4iLCJsYXN0X25hbWUiOiJEb2UiLCJpZCI6MX0sIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.mw3n_IDS7iWnttjeae_sXn9533d3ovXcr7VYfgwweFo";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiZmlyc3RfbmFtZSI6IkpvaG4iLCJsYXN0X25hbWUiOiJEb2UiLCJwcm9maWxlX3BpYyI6Imh0dHA6Ly91aXRoZW1lLm5ldC9zb2NpYWxhL2ltYWdlcy90LTEwLmpwZyIsImlkIjoxfSwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.b2mRI6Kdiy-ilV2v798xG4Rd2vGVlXetm81BNvtMWHM";
 
 function App() {
   const [authUser, setAuthUser] = useState(null);
@@ -94,8 +95,9 @@ function App() {
   return (
     <>
       <Header authUser={authUser} logoutFunc={logout} />
-      {authUser ? <Layout /> : <AuthRoutes handleLogin={handleLogin} />}
-
+      <AuthContext.Provider value={authUser}>
+        {authUser ? <Layout /> : <AuthRoutes handleLogin={handleLogin} />}
+      </AuthContext.Provider>
       <ToastContainer />
     </>
   );

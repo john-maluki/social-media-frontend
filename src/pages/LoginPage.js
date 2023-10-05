@@ -5,56 +5,6 @@ import "../assets/css/LoginPage.css";
 // import { Link } from "react-router-dom";
 
 const LoginPage = ({ handleLogin, isLoging }) => {
-  const [userCredetials, setUserCredetials] = useState({
-    username: "",
-    password: "",
-  });
-  const [userCredetialsError, setUserCredetialsError] = useState({
-    username: "",
-    password: "",
-  });
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   validateLoginForm();
-  //   if (loginFormIsValid()) {
-  //     login(userCredetials);
-  //   }
-  // };
-
-  const loginFormIsValid = () => {
-    return !(
-      Boolean(userCredetialsError.username) ||
-      Boolean(userCredetialsError.password)
-    );
-  };
-
-  const validateLoginForm = () => {
-    if (userCredetials.username.trim() === "") {
-      setUserCredetialsError((userCredetialsError) => ({
-        ...userCredetialsError,
-        username: "Username required!",
-      }));
-    } else if (userCredetials.password.trim() === "") {
-      setUserCredetialsError((userCredetialsError) => ({
-        ...userCredetialsError,
-        password: "Password required!",
-      }));
-    }
-  };
-
-  const handleOnChange = (e) => {
-    const { value, name } = e.target;
-    setUserCredetials((userCredetials) => ({
-      ...userCredetials,
-      [name]: value,
-    }));
-    setUserCredetialsError((userCredetialsError) => ({
-      ...userCredetialsError,
-      [name]: "",
-    }));
-  };
-
   const formSchema = yup.object().shape({
     username: yup.string().email("Invalid email").required("Must enter email"),
     password: yup.string().required("Must enter a password").min(5),
