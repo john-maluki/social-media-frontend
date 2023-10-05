@@ -1,103 +1,28 @@
 import React, { useState } from "react";
 import "../assets/css/HomePage.css";
+import { Link, Outlet } from "react-router-dom";
 
 const HomePage = () => {
-  const [onActionPopUp, setOnActionPopUp] = useState(false);
-  const handleActionPop = () => {
-    setOnActionPopUp(!onActionPopUp);
-  };
-
-  const myComponentStyle = onActionPopUp
-    ? "post-actions show-popup"
-    : "post-actions";
   return (
     <main className="main">
       <section className="main__nav-section">
         <nav className="main__nav">
           <ul>
-            <li>Posts</li>
-            <li>Your Posts</li>
-            <li>Liked Posts</li>
+            <li>
+              <Link to="/">Posts</Link>
+            </li>
+            <li>
+              <Link to="/user-posts">Your Posts</Link>
+            </li>
+            <li>
+              <Link to="/user-liked-posts">Liked Posts</Link>
+            </li>
           </ul>
         </nav>
       </section>
       <section className="main__content-section">
-        <div className="main__content">
-          <div className="post-card">
-            <div className="post-card__header">
-              <div className="post-card__user-details">
-                <img
-                  className="profile-image profile-image--inlide-block"
-                  src="http://uitheme.net/sociala/images/t-10.jpg"
-                  alt="profile picture"
-                />
-                <span>
-                  <h4 className="user-name">Surfiya Zakir</h4>
-                  <p className="post-creation-date">3 hour ago</p>
-                </span>
-              </div>
-              <div
-                className="post-card__more-options"
-                onClick={handleActionPop}
-              >
-                <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-              </div>
-              <div className={myComponentStyle}>
-                <div className="post-action">
-                  <i
-                    className="fa fa-pencil-square-o update-icon"
-                    aria-hidden="true"
-                  ></i>
-                  <p>update</p>
-                </div>
-                <div className="post-action">
-                  <i className="fa fa-trash delete-icon" aria-hidden="true"></i>
-                  <p>delete</p>
-                </div>
-              </div>
-            </div>
-            <p className="post-card__body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-              nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus
-              faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
-            </p>
-            <div className="post-card__footer">
-              <div className="post-card__likes">
-                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                <h5>2.5 Likes</h5>
-              </div>
-            </div>
-          </div>
-          <div className="post-card">
-            <div className="post-card__header">
-              <div className="post-card__user-details">
-                <img
-                  className="profile-image profile-image--inlide-block"
-                  src="http://uitheme.net/sociala/images/t-10.jpg"
-                  alt="profile picture"
-                />
-                <span>
-                  <h4 className="user-name">Surfiya Zakir</h4>
-                  <p className="post-creation-date">3 hour ago</p>
-                </span>
-              </div>
-              <div className="post-card__more-options">
-                <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
-              </div>
-            </div>
-            <p className="post-card__body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-              nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus
-              faucibus mollis pharetra. Proin blandit ac massa sed rhoncus
-            </p>
-            <div className="post-card__footer">
-              <div className="post-card__likes">
-                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                <h5>2.5 Likes</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Posts are displayed here */}
+        <Outlet />
       </section>
       <section className="create-post-section">
         <div className="create-post-form">

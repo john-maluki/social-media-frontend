@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../assets/css/Header.css";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [onUserIconClick, setonUserIconClick] = useState(false);
@@ -11,11 +12,18 @@ const Header = () => {
     ? "header__user-profile-popup show-popup"
     : "header__user-profile-popup";
 
+  const linkStyle = {
+    textDecoration: "none",
+    color: "black",
+  };
+
   return (
     <header className="header header--fixed">
       <div className="header__log-and-search">
         <div className="logo">
-          <span>CON-NECT</span>
+          <span>
+            <Link to="/">CON-NECT</Link>
+          </span>
         </div>
         <input
           id="header__search"
@@ -25,7 +33,7 @@ const Header = () => {
         />
       </div>
       <div className="header__log-in">
-        <a href="#">Create Account</a>
+        <Link to="/sign-up">Create Account</Link>
       </div>
       <div className="header__profile-menu" onClick={onUserProfileClick}>
         <i className="fa fa-user-o" aria-hidden="true"></i>
@@ -42,7 +50,16 @@ const Header = () => {
         <div className="header-items">
           <div className="header-item">
             <i className="fa fa-user-o" aria-hidden="true"></i>
-            <p>Your Profile</p>
+            <p>
+              {" "}
+              <Link
+                to="/user-profile"
+                style={linkStyle}
+                onClick={onUserProfileClick}
+              >
+                Your Profile
+              </Link>
+            </p>
           </div>
           <div className="header-item">
             <i className="fa fa-sign-out" aria-hidden="true"></i>
