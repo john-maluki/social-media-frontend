@@ -30,12 +30,14 @@ const Header = ({ authUser, logoutFunc }) => {
             <Link to="/">CON-NECT</Link>
           </span>
         </div>
-        <input
-          id="header__search"
-          className="header__search"
-          type="search"
-          placeholder="Search posts by username"
-        />
+        {authUser ? (
+          <input
+            id="header__search"
+            className="header__search"
+            type="search"
+            placeholder="Search posts by username"
+          />
+        ) : null}
       </div>
       {authUser ? (
         <div className="header__log-in">
@@ -46,10 +48,12 @@ const Header = ({ authUser, logoutFunc }) => {
           <Link to="/sign-up">Create Account</Link>
         </div>
       )}
-      <div className="header__profile-menu" onClick={onUserProfileClick}>
-        <i className="fa fa-user-o" aria-hidden="true"></i>
-        <i className="fa fa-caret-down" aria-hidden="true"></i>
-      </div>
+      {authUser ? (
+        <div className="header__profile-menu" onClick={onUserProfileClick}>
+          <i className="fa fa-user-o" aria-hidden="true"></i>
+          <i className="fa fa-caret-down" aria-hidden="true"></i>
+        </div>
+      ) : null}
       <div className={myComponentStyle} onMouseLeave={onUserProfileClick}>
         <div className="header__user-details">
           <img
