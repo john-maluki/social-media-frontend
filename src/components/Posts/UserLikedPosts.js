@@ -11,7 +11,11 @@ const UserLikedPosts = () => {
 
   return (
     <div className="main__content">
-      {postList ? postList : "No post available"}
+      {postList.length !== 0 ? (
+        postList
+      ) : (
+        <div className="no-data">No posts</div>
+      )}
     </div>
   );
 };

@@ -15,7 +15,6 @@ const removeAuthUserFromLocalStorage = () => {
 };
 
 const getHTTPHeaderWithToken = () => {
-  console.log(getAuthUserFromLocalStorage());
   return {
     headers: {
       Authorization: `Bearer ${getAuthUserFromLocalStorage()}`,

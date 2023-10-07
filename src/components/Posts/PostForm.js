@@ -30,7 +30,7 @@ const PostForm = () => {
     axios
       .post(`${MAIN_DOMAIN}/posts`, post, getHTTPHeaderWithToken())
       .then((resp) => {
-        if (resp.status == 201) {
+        if (resp.status === 201) {
           toast.success("Post created successfully", {
             position: "top-right",
             autoClose: 5000,
@@ -72,12 +72,12 @@ const PostForm = () => {
             data-garden-id="buttons.icon"
             data-garden-version="8.13.0"
             theme="[object Object]"
-            class="sc-bwzfXH hDrfMZ"
+            className="sc-bwzfXH hDrfMZ"
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-strokeWidth="2"
+              strokeLinecap="round"
+              stroke-strokewidth="2"
               d="M3 8h10"
             ></path>
           </svg>

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../assets/css/Header.css";
 import { Link } from "react-router-dom";
+import PostSearchForm from "./Posts/PostSearchForm";
 
-const Header = ({ authUser, logoutFunc }) => {
+const Header = ({ authUser, logoutFunc, getPostSearchString }) => {
   const [onUserIconClick, setonUserIconClick] = useState(false);
   const onUserProfileClick = () => {
     setonUserIconClick(!onUserIconClick);
@@ -31,12 +32,7 @@ const Header = ({ authUser, logoutFunc }) => {
           </span>
         </div>
         {authUser ? (
-          <input
-            id="header__search"
-            className="header__search"
-            type="search"
-            placeholder="Search posts by username"
-          />
+          <PostSearchForm getPostSearchString={getPostSearchString} />
         ) : null}
       </div>
       {authUser ? (
@@ -56,7 +52,11 @@ const Header = ({ authUser, logoutFunc }) => {
       ) : null}
       <div className={myComponentStyle} onMouseLeave={onUserProfileClick}>
         <div className="header__user-details">
-          <img className="profile-image" src={authUser?.profile_picture} />
+          <img
+            className="profile-image"
+            src={authUser?.profile_picture}
+            alt="profile"
+          />
           <h4>
             {authUser?.first_name} {authUser?.last_name}
           </h4>

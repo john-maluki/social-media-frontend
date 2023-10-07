@@ -15,10 +15,16 @@ import Header from "./components/Header";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { AuthContext } from "./contexts/AuthContext";
+import { SearchPostStringContext } from "./contexts/SearchStringPostContext";
 
 function App() {
   const [authUser, setAuthUser] = useState(null);
+  const [postSearchString, setpostSearchString] = useState("");
   const navigate = useNavigate();
+
+  const getPostSearchString = (searchString) => {
+    setpostSearchString(searchString);
+  };
 
   const loginFromLocalStorage = () => {
     const storedAuthUser = getAuthUserFromLocalStorage();
@@ -42,8 +48,6 @@ function App() {
     axios
       .post(`${MAIN_DOMAIN}/login`, userCredetials)
       .then((resp) => {
-        // storeAuthUserOnLocalStorage(resp.data.access_token);
-        // setAuthUser(decode_jwt(jwt_example));
         if (resp.status === 200) {
           storeAuthUserOnLocalStorage(resp.data.access_token);
           setAuthUser(decode_jwt(resp.data.access_token));
@@ -87,10 +91,17 @@ function App() {
   }, []);
   return (
     <>
-      <Header authUser={authUser} logoutFunc={logout} />
-      <AuthContext.Provider value={authUser}>
-        {authUser ? <Layout /> : <AuthRoutes handleLogin={handleLogin} />}
-      </AuthContext.Provider>
+      <Header
+        authUser={authUser}
+        logoutFunc={logout}
+        getPostSearchString={getPostSearchString}
+      />
+      <SearchPostStringContext.Provider value={postSearchString}>
+        <AuthContext.Provider value={authUser}>
+          {authUser ? <Layout /> : <AuthRoutes handleLogin={handleLogin} />}
+        </AuthContext.Provider>
+      </SearchPostStringContext.Provider>
+
       <ToastContainer />
     </>
   );

@@ -15,18 +15,15 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchPostsFromServer = () => {
-    axios
-      .get(`${MAIN_DOMAIN}/posts`, getHTTPHeaderWithToken())
-      .then((resp) => {
-        setIsLoading(true);
-        if (resp.status === 200) {
-          setPosts(resp.data);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
-        }
-      })
-      .catch((err) => setIsLoading(false));
+    setIsLoading(true);
+    axios.get(`${MAIN_DOMAIN}/posts`, getHTTPHeaderWithToken()).then((resp) => {
+      if (resp.status === 200) {
+        setPosts(resp.data);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    });
   };
 
   const deletePost = (id) => {
@@ -35,7 +32,6 @@ const HomePage = () => {
   };
 
   const addPost = (new_post) => {
-    console.log(new_post);
     const new_posts = [new_post, ...posts];
     setPosts(new_posts);
   };
@@ -60,20 +56,20 @@ const HomePage = () => {
           </ul>
         </nav>
       </section>
-      <PostsContext.Provider
-        value={{ posts: posts, deletePost: deletePost, addPost: addPost }}
-      >
-        <section className="main__content-section">
-          {/* Posts are displayed here */}
 
-          {!isLoading ? (
+      {!isLoading ? (
+        <PostsContext.Provider
+          value={{ posts: posts, deletePost: deletePost, addPost: addPost }}
+        >
+          <section className="main__content-section">
+            {/* Posts are displayed here */}
             <Outlet />
-          ) : (
-            <div className="spinner-loader">{getSendingDataSpinner()}</div>
-          )}
-        </section>
-        <PostForm />
-      </PostsContext.Provider>
+          </section>
+          <PostForm />
+        </PostsContext.Provider>
+      ) : (
+        <div className="spinner-loader">{getSendingDataSpinner()}</div>
+      )}
     </main>
   );
 };
