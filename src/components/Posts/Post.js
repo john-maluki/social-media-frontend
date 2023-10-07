@@ -51,6 +51,15 @@ const Post = ({ post }) => {
       });
   };
 
+  const handlePostUdate = (post) => {
+    handleActionPop();
+    const updated_post = {
+      id: post.id,
+      description: post.description,
+    };
+    posts.getPostToUpdate(updated_post);
+  };
+
   return (
     <div className="post-card">
       <div className="post-card__header">
@@ -75,7 +84,7 @@ const Post = ({ post }) => {
           </div>
         ) : null}
         <div className={myComponentStyle} onMouseLeave={handleActionPop}>
-          <div className="post-action" onClick={handleActionPop}>
+          <div className="post-action" onClick={() => handlePostUdate(post)}>
             <i
               className="fa fa-pencil-square-o update-icon"
               aria-hidden="true"

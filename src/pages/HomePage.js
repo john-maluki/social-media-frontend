@@ -13,6 +13,9 @@ import {
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [postToUpdate, setPostToUpdate] = useState({
+    description: "",
+  });
 
   const fetchPostsFromServer = () => {
     setIsLoading(true);
@@ -29,11 +32,29 @@ const HomePage = () => {
   const deletePost = (id) => {
     const filtered_posts = posts.filter((post) => post.id !== id);
     setPosts(filtered_posts);
+    setPostToUpdate({
+      description: "",
+    });
   };
 
   const addPost = (new_post) => {
     const new_posts = [new_post, ...posts];
     setPosts(new_posts);
+  };
+
+  const updatePost = (updated_post) => {
+    const new_posts = posts.map((post) =>
+      post.id === updated_post.id ? updated_post : post
+    );
+    setPosts(new_posts);
+    setPostToUpdate({
+      description: "",
+    });
+  };
+
+  const getPostToUpdate = (post) => {
+    console.log(post);
+    setPostToUpdate(post);
   };
 
   useEffect(() => {
@@ -59,13 +80,19 @@ const HomePage = () => {
 
       {!isLoading ? (
         <PostsContext.Provider
-          value={{ posts: posts, deletePost: deletePost, addPost: addPost }}
+          value={{
+            posts: posts,
+            deletePost: deletePost,
+            addPost: addPost,
+            updatePost: updatePost,
+            getPostToUpdate: getPostToUpdate,
+          }}
         >
           <section className="main__content-section">
             {/* Posts are displayed here */}
             <Outlet />
           </section>
-          <PostForm />
+          <PostForm postToUpdate={postToUpdate} />
         </PostsContext.Provider>
       ) : (
         <div className="spinner-loader">{getSendingDataSpinner()}</div>

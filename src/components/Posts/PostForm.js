@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
@@ -8,21 +8,42 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { getHTTPHeaderWithToken } from "../../utils/functions";
 import { PostsContext } from "../../contexts/PostContext";
 
-const PostForm = () => {
+const PostForm = ({ postToUpdate }) => {
   const authUser = useContext(AuthContext);
   const postContextMethods = useContext(PostsContext);
   const formSchema = yup.object().shape({
     description: yup.string().required("Must enter a post"),
   });
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      description: "",
+      description: postToUpdate.description,
       user_id: authUser.id,
     },
     validationSchema: formSchema,
     onSubmit: (post) => {
-      console.log(post);
-      createPost(post);
+      if ("id" in postToUpdate) {
+        if (post.description === postToUpdate.description) {
+          toast.info("No changes made", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          const p = {
+            id: postToUpdate.id,
+            description: post.description,
+          };
+          updatePost(p);
+        }
+      } else {
+        createPost(post);
+      }
     },
   });
 
@@ -57,6 +78,46 @@ const PostForm = () => {
         })
       );
   };
+
+  const updatePost = (post) => {
+    axios
+      .patch(`${MAIN_DOMAIN}/posts/${post.id}`, post, getHTTPHeaderWithToken())
+      .then((resp) => {
+        if (resp.status === 200) {
+          toast.success("Post successfully updated", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          postContextMethods.updatePost(resp.data);
+        }
+      })
+      .catch((err) =>
+        toast.error("Error occured while updating post", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        })
+      );
+  };
+
+  const resetForm = () => {
+    formik.resetForm();
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [postToUpdate]);
   return (
     <section className="create-post-section">
       <div className="create-post-form">
