@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Layout from "./layouts/Layout";
 import { useNavigate } from "react-router";
@@ -17,25 +16,20 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { AuthContext } from "./contexts/AuthContext";
 
-const jwt_example =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiZmlyc3RfbmFtZSI6IkpvaG4iLCJsYXN0X25hbWUiOiJEb2UiLCJwcm9maWxlX3BpYyI6Imh0dHA6Ly91aXRoZW1lLm5ldC9zb2NpYWxhL2ltYWdlcy90LTEwLmpwZyIsImlkIjoxfSwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.b2mRI6Kdiy-ilV2v798xG4Rd2vGVlXetm81BNvtMWHM";
-
 function App() {
   const [authUser, setAuthUser] = useState(null);
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoging, setIsloging] = useState(false);
-
   const loginFromLocalStorage = () => {
     const storedAuthUser = getAuthUserFromLocalStorage();
-    setAuthUser(storedAuthUser);
+    if (storedAuthUser) {
+      setAuthUser(decode_jwt(storedAuthUser));
+    }
   };
 
   const decode_jwt = (token) => {
     const decoded = jwt_decode(token);
-    storeAuthUserOnLocalStorage(decoded.sub);
-    setAuthUser(decoded.sub);
+    return decoded.sub;
   };
 
   const logout = () => {
@@ -44,17 +38,15 @@ function App() {
     return navigate("/");
   };
 
-  const toggleIsLogin = () => {
-    setIsloging((isLoging) => !isLoging);
-  };
-
-  const fetchUserFromServer = (userCredetials) => {
-    toggleIsLogin();
+  const fetchUserFromServer = (userCredetials, isSubmitting) => {
     axios
-      .post(`${MAIN_DOMAIN}/users`, userCredetials)
+      .post(`${MAIN_DOMAIN}/login`, userCredetials)
       .then((resp) => {
-        if (resp.status == 201) {
-          decode_jwt(jwt_example);
+        // storeAuthUserOnLocalStorage(resp.data.access_token);
+        // setAuthUser(decode_jwt(jwt_example));
+        if (resp.status === 200) {
+          storeAuthUserOnLocalStorage(resp.data.access_token);
+          setAuthUser(decode_jwt(resp.data.access_token));
         } else {
           toast.error("Username or Password is incorrect!!", {
             position: "top-right",
@@ -69,9 +61,9 @@ function App() {
           storeAuthUserOnLocalStorage(null);
           setAuthUser(null);
         }
-        toggleIsLogin();
       })
-      .catch((error) =>
+      .catch((error) => {
+        setAuthUser(null);
         toast.error("Error doing the login. Try later", {
           position: "top-right",
           autoClose: 5000,
@@ -81,12 +73,13 @@ function App() {
           draggable: true,
           progress: undefined,
           theme: "colored",
-        })
-      );
+        });
+        isSubmitting(false);
+      });
   };
 
-  const handleLogin = (userCredetials) => {
-    fetchUserFromServer(userCredetials);
+  const handleLogin = (userCredetials, isSubmitting) => {
+    fetchUserFromServer(userCredetials, isSubmitting);
   };
 
   useEffect(() => {

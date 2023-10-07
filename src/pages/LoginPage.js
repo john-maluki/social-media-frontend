@@ -1,10 +1,9 @@
-import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import "../assets/css/LoginPage.css";
-// import { Link } from "react-router-dom";
+import { getSendingDataSpinner } from "../utils/functions";
 
-const LoginPage = ({ handleLogin, isLoging }) => {
+const LoginPage = ({ handleLogin }) => {
   const formSchema = yup.object().shape({
     username: yup.string().email("Invalid email").required("Must enter email"),
     password: yup.string().required("Must enter a password").min(5),
@@ -18,7 +17,7 @@ const LoginPage = ({ handleLogin, isLoging }) => {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values);
-      handleLogin(values);
+      handleLogin(values, formik.setSubmitting);
     },
   });
   return (
@@ -59,8 +58,8 @@ const LoginPage = ({ handleLogin, isLoging }) => {
             <p className="error">{formik.errors.password}</p>
           </div>
           <div className="form-group">
-            {isLoging ? (
-              <p>Loading ...</p>
+            {formik.isSubmitting ? (
+              <div className="spinner-loader">{getSendingDataSpinner()}</div>
             ) : (
               <input type="submit" value="LOGIN" />
             )}

@@ -5,16 +5,39 @@ import PostForm from "../components/Posts/PostForm";
 import { MAIN_DOMAIN } from "../utils/constants";
 import axios from "axios";
 import { PostsContext } from "../contexts/PostContext";
+import {
+  getHTTPHeaderWithToken,
+  getSendingDataSpinner,
+} from "../utils/functions";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchPostsFromServer = () => {
-    axios.get(`${MAIN_DOMAIN}/posts`).then((resp) => {
-      if (resp.status === 200) {
-        setPosts(resp.data);
-      }
-    });
+    axios
+      .get(`${MAIN_DOMAIN}/posts`, getHTTPHeaderWithToken())
+      .then((resp) => {
+        setIsLoading(true);
+        if (resp.status === 200) {
+          setPosts(resp.data);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => setIsLoading(false));
+  };
+
+  const deletePost = (id) => {
+    const filtered_posts = posts.filter((post) => post.id !== id);
+    setPosts(filtered_posts);
+  };
+
+  const addPost = (new_post) => {
+    console.log(new_post);
+    const new_posts = [new_post, ...posts];
+    setPosts(new_posts);
   };
 
   useEffect(() => {
@@ -37,13 +60,20 @@ const HomePage = () => {
           </ul>
         </nav>
       </section>
-      <section className="main__content-section">
-        {/* Posts are displayed here */}
-        <PostsContext.Provider value={posts}>
-          <Outlet />
-        </PostsContext.Provider>
-      </section>
-      <PostForm />
+      <PostsContext.Provider
+        value={{ posts: posts, deletePost: deletePost, addPost: addPost }}
+      >
+        <section className="main__content-section">
+          {/* Posts are displayed here */}
+
+          {!isLoading ? (
+            <Outlet />
+          ) : (
+            <div className="spinner-loader">{getSendingDataSpinner()}</div>
+          )}
+        </section>
+        <PostForm />
+      </PostsContext.Provider>
     </main>
   );
 };

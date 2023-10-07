@@ -4,7 +4,9 @@ import { PostsContext } from "../../contexts/PostContext";
 
 const Posts = () => {
   const posts = useContext(PostsContext);
-  const postList = posts.map((post) => <Post key={post.id} post={post} />);
+  const postList = posts.posts.map((post) => (
+    <Post key={post.id} post={post} />
+  ));
 
   return (
     <div className="main__content">

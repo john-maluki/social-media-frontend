@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { MAIN_DOMAIN } from "../../utils/constants";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../contexts/AuthContext";
+import { getHTTPHeaderWithToken } from "../../utils/functions";
+import { PostsContext } from "../../contexts/PostContext";
 
 const PostForm = () => {
+  const authUser = useContext(AuthContext);
+  const postContextMethods = useContext(PostsContext);
   const formSchema = yup.object().shape({
     description: yup.string().required("Must enter a post"),
   });
   const formik = useFormik({
     initialValues: {
       description: "",
+      user_id: authUser.id,
     },
     validationSchema: formSchema,
     onSubmit: (post) => {
@@ -22,7 +28,7 @@ const PostForm = () => {
 
   const createPost = (post) => {
     axios
-      .post(`${MAIN_DOMAIN}/posts`, post)
+      .post(`${MAIN_DOMAIN}/posts`, post, getHTTPHeaderWithToken())
       .then((resp) => {
         if (resp.status == 201) {
           toast.success("Post created successfully", {
@@ -35,6 +41,7 @@ const PostForm = () => {
             progress: undefined,
             theme: "colored",
           });
+          postContextMethods.addPost(resp.data);
         }
       })
       .catch((err) =>

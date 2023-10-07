@@ -56,7 +56,7 @@ const Header = ({ authUser, logoutFunc }) => {
       ) : null}
       <div className={myComponentStyle} onMouseLeave={onUserProfileClick}>
         <div className="header__user-details">
-          <img className="profile-image" src={authUser?.profile_pic} />
+          <img className="profile-image" src={authUser?.profile_picture} />
           <h4>
             {authUser?.first_name} {authUser?.last_name}
           </h4>
