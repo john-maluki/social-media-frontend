@@ -125,14 +125,13 @@ main {
 
 /* Create post section */
 .create-post-section {
-  width: 100%;
+  width: 300px;
+  position: fixed;
+  top: 80px;
+  right: 100px;
 }
 .create-post-form {
   width: 100%;
-  position: absolute;
-  top: 20px;
-  right: 100px;
-  width: 300px;
   height: 400px;
   z-index: 10;
 }
