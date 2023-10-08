@@ -5,7 +5,6 @@ import Posts from "../components/Posts/Posts";
 import UserPosts from "../components/Posts/UserPosts";
 import UserLikedPosts from "../components/Posts/UserLikedPosts";
 import UserProfilePage from "../pages/UserProfilePage";
-import SignUpPage from "../pages/SignUpPage";
 
 const AppRoutes = () => {
   return (
