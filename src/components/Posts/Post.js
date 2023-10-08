@@ -18,6 +18,10 @@ const Post = ({ post }) => {
     ? "post-actions show-popup"
     : "post-actions";
 
+  const thumbsClassStyle = posts.userLikedPost.find((p) => p.id === post.id)
+    ? "fa fa-thumbs-up"
+    : "fa fa-thumbs-o-up";
+
   const handlePostDelete = () => {
     handleActionPop();
     axios
@@ -41,6 +45,44 @@ const Post = ({ post }) => {
         toast.error("Error deleting post!", {
           position: "top-right",
           autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+
+  const handleLikePost = () => {
+    axios
+      .post(
+        `${MAIN_DOMAIN}/likes`,
+        { user_id: authUser.id, post_id: post.id },
+        getHTTPHeaderWithToken()
+      )
+      .then((resp) => {
+        if (resp.status === 201) {
+          posts.likePost(resp.data);
+          toast.success("Post liked successfully", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else if (resp.status === 200) {
+          posts.unLikePost(resp.data);
+        }
+      })
+      .catch((err) => {
+        toast.error("Error liking post!", {
+          position: "top-right",
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -100,7 +142,11 @@ const Post = ({ post }) => {
       <p className="post-card__body">{post?.description}</p>
       <div className="post-card__footer">
         <div className="post-card__likes">
-          <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+          <i
+            className={thumbsClassStyle}
+            aria-hidden="true"
+            onClick={handleLikePost}
+          ></i>
           <h5>{post.likes} Likes</h5>
         </div>
       </div>
