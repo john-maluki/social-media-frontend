@@ -23,10 +23,7 @@ const HomePage = () => {
   const fetchLikedPostFromServer = () => {
     setIsLoading(true);
     axios
-      .get(
-        `${MAIN_DOMAIN}/users/${authUser.id}/posts`,
-        getHTTPHeaderWithToken()
-      )
+      .get(`/users/${authUser.id}/posts`, getHTTPHeaderWithToken())
       .then((resp) => {
         if (resp.status === 200) {
           setUserLikedPost(resp.data);
@@ -38,7 +35,7 @@ const HomePage = () => {
 
   const fetchPostsFromServer = () => {
     setIsLoading(true);
-    axios.get(`${MAIN_DOMAIN}/posts`, getHTTPHeaderWithToken()).then((resp) => {
+    axios.get(`/posts`, getHTTPHeaderWithToken()).then((resp) => {
       if (resp.status === 200) {
         setPosts(resp.data);
         setIsLoading(false);
