@@ -16,7 +16,6 @@ const LoginPage = ({ handleLogin }) => {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      console.log(values);
       handleLogin(values, formik.setSubmitting);
     },
   });

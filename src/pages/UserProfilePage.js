@@ -1,95 +1,51 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../assets/css/SignUpPage.css";
+import UserProfileForm from "../components/UserProfileForm";
+import axios from "axios";
+import { AuthContext } from "../contexts/AuthContext";
+import { MAIN_DOMAIN } from "../utils/constants";
+import { toast } from "react-toastify";
+import { getHTTPHeaderWithToken } from "../utils/functions";
 
 const UserProfilePage = () => {
+  const authUser = useContext(AuthContext);
+  const [userProfileData, setUserProfileData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    bio: "",
+    profile_picture: "http://uitheme.net/sociala/images/t-10.jpg",
+    email: "",
+    password: "",
+    gender: "",
+    identification_card: "",
+    date_of_birth: "",
+    contact: "",
+    confirm_password: "",
+  });
+  const fetchUserProfileDataFromServer = () => {
+    axios
+      .get(`${MAIN_DOMAIN}/users/${authUser.id}`, getHTTPHeaderWithToken())
+      .then((resp) => setUserProfileData(resp.data))
+      .catch((err) => {
+        toast.error("Could not fetch frofile data", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
+  useEffect(() => fetchUserProfileDataFromServer(), []);
   return (
     <div className="signup-page">
       <section className="form-section">
         <h2 className="signup-title">Your Profile</h2>
-        <form className="signup-form">
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="first-name">First Name</label>
-              <input type="text" name="first-name" id="first-name" />
-              <span className="error"></span>
-            </div>
-            <div className="form-control">
-              <label htmlFor="last-name">Last Name</label>
-              <input type="text" name="last-name" id="last-name" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="username">UserName</label>
-              <input
-                type="email"
-                name="username"
-                id="username"
-                placeholder="use your email"
-              />
-              <span></span>
-            </div>
-            <div className="form-control">
-              <label htmlFor="email">Email</label>
-              <input type="email" name="email" id="email" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="male">Male</label>
-              <input type="radio" name="gender" id="male" value="M" />
-              <span></span>
-            </div>
-            <div className="form-control">
-              <label htmlFor="female">Female</label>
-              <input type="radio" name="gender" id="female" value="F" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="country">Country</label>
-              <input type="text" name="country" id="country" />
-              <span></span>
-            </div>
-            <div className="form-control">
-              <label htmlFor="city">City</label>
-              <input type="text" name="city" id="city" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="profile-pic">Profile Pic</label>
-              <input type="url" name="profile-pic" id="profile-pic" />
-              <span></span>
-            </div>
-            <div className="form-control">
-              <label htmlFor="dob">Date of Birth</label>
-              <input type="date" name="dob" id="dob" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="contact">Contact Number</label>
-              <input type="tel" name="contact" id="contact" />
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-control">
-              <label htmlFor="bio">Bio</label>
-              <textarea name="bio" id="bio"></textarea>
-              <span></span>
-            </div>
-          </div>
-          <div className="form-group">
-            <input type="submit" value="Save Changes" />
-          </div>
-        </form>
+        <UserProfileForm userProfileData={userProfileData} />
       </section>
     </div>
   );
