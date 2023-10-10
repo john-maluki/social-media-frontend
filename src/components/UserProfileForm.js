@@ -13,7 +13,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 const UserProfileForm = ({ userProfileData }) => {
   const authUser = useContext(AuthContext);
-  const eighteen_years_ago = dayjs().subtract(18, "year").format("MM-DD-YYYY");
+  const eighteen_years_ago = dayjs().subtract(18, "year").format("MM/DD/YYYY");
   const createUser = (user) => {
     axios
       .post(`${MAIN_DOMAIN}/users`, user)
@@ -123,6 +123,8 @@ const UserProfileForm = ({ userProfileData }) => {
     contact: yup.string().required("Required"),
     date_of_birth: yup
       .date()
+      .nullable()
+      .transform((curr, orig) => (orig === "" ? null : curr))
       .max(eighteen_years_ago, "You must be at least 18 years old to register")
       .required("Required field"),
   });
